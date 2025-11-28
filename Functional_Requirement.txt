@@ -1,0 +1,35 @@
+Functional Requirements
+1.	Account Data Display
+	Create an LWC component that displays Account records in a Lightning Datatable.
+	Columns to display: 
+	Name
+	AccountNumber
+	Type
+	AccountStatus
+	CreatedDate
+2.	Initial Load
+	On component load, display 10 Account records by default.
+3.	Search Functionality
+	Provide an input field above the datatable to filter Accounts by Account Name.
+4.	Account Selection
+	Allow only one Account record to be selected at a time in the Account datatable.
+5.	Related Contacts Display
+	Upon selecting an Account, display its related Contacts in another Lightning Datatable.
+	Columns to display: 
+	FirstName
+	LastName
+	Email
+6.	Pagination
+	Implement pagination for both Account and Contact tables: 
+	Show 10 records per page.
+	Provide Previous and Next buttons for navigation.
+________________________________________
+Server-Side Requirements
+1.	Apex Helper Class 
+	Create an Apex class with methods: 
+	getAccounts(searchKey, pageNumber) 
+	Fetch Accounts based on search input and pagination.
+	getContacts(accountId, pageNumber) 
+	Fetch related Contacts for the selected Account with pagination.
+________________________________________
+

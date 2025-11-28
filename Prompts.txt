@@ -1,0 +1,17 @@
+Edit Mode:
+1) Help me create brand new LWC component based on the requirements mentioned in this file.
+
+
+Agent Mode: 
+2) Help me deploy the MSTAR_AccountHelper apex class and MSTAR Account Datatable LWC component to my Salesforce org.
+
+
+Agent Mode:
+3) Commit and push all my uncommited file to remote repository
+
+
+
+
+
+
+
