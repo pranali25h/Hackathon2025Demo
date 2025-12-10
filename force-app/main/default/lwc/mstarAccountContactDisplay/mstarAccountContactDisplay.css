@@ -1,0 +1,20 @@
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.search-input {
+  width: 100%;
+}
+
+/* Radio button styling */
+input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #0b5394;
+}
+

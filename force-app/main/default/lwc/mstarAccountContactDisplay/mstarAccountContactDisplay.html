@@ -1,0 +1,148 @@
+<template>
+  <lightning-card title="Account & Contact Management" icon-name="standard:account">
+    <div class="slds-p-around_medium">
+      <!-- Search Section -->
+      <div class="slds-m-bottom_medium">
+        <lightning-input
+          type="text"
+          label="Search Accounts"
+          placeholder="Enter account name"
+          value={searchKey}
+          onchange={handleSearchChange}
+          class="search-input"
+        ></lightning-input>
+      </div>
+
+      <!-- Accounts Section -->
+      <div class="slds-m-bottom_large">
+        <h2 class="slds-text-heading_medium slds-m-bottom_small">Accounts</h2>
+        <div class="slds-p-bottom_small">
+          <p class="slds-text-body_regular slds-text-color_weak">
+            Select an account to view related contacts
+          </p>
+        </div>
+
+        <!-- Accounts Table with Radio Buttons -->
+        <table class="slds-table slds-table_bordered slds-table_striped">
+          <thead>
+            <tr class="slds-line-height_reset">
+              <th class="slds-text-title_caps slds-cell-buffer" style="width: 60px;" scope="col">
+                <span>Select</span>
+              </th>
+              <th class="slds-text-title_caps slds-cell-buffer" scope="col">Name</th>
+              <th class="slds-text-title_caps slds-cell-buffer" scope="col">Account Number</th>
+              <th class="slds-text-title_caps slds-cell-buffer" scope="col">Type</th>
+              <th class="slds-text-title_caps slds-cell-buffer" scope="col">Created Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <template for:each={accountDataWithSelection} for:item="account">
+              <tr key={account.Id} class="slds-hint-parent">
+                <td class="slds-cell-buffer" style="width: 60px; text-align: center;">
+                  <input
+                    type="radio"
+                    name="accountSelection"
+                    value={account.Id}
+                    checked={account.isSelected}
+                    onchange={handleRadioChange}
+                  />
+                </td>
+                <td class="slds-cell-buffer">
+                  <span>{account.Name}</span>
+                </td>
+                <td class="slds-cell-buffer">
+                  <span>{account.Account_ID__c}</span>
+                </td>
+                <td class="slds-cell-buffer">
+                  <span>{account.Account_Type__c}</span>
+                </td>
+                <td class="slds-cell-buffer">
+                  <span>{account.CreatedDate}</span>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+
+        <!-- Empty State -->
+        <template if:false={accountData.length}>
+          <div class="slds-align_absolute-center slds-p-vertical_large">
+            <p class="slds-text-body_regular slds-text-color_weak">No accounts found</p>
+          </div>
+        </template>
+
+        <!-- Account Pagination -->
+        <div class="slds-p-top_medium pagination-container">
+          <button
+            class="slds-button slds-button_neutral"
+            onclick={handlePreviousAccounts}
+            disabled={isAccountFirstPage}
+          >
+            Previous
+          </button>
+          <span class="slds-p-horizontal_medium">
+            Page {currentAccountPage} of {totalAccountPages}
+          </span>
+          <button
+            class="slds-button slds-button_neutral"
+            onclick={handleNextAccounts}
+            disabled={isAccountLastPage}
+          >
+            Next
+          </button>
+        </div>
+      </div>
+
+      <!-- Contacts Section -->
+      <template if:true={selectedAccount}>
+        <div class="slds-m-top_large">
+          <h2 class="slds-text-heading_medium slds-m-bottom_small">
+            Contacts for {selectedAccount.Name}
+          </h2>
+          <lightning-datatable
+            key-field="Id"
+            data={contactData}
+            columns={contactColumns}
+            hide-checkbox-column="true"
+          ></lightning-datatable>
+
+          <!-- Contact Pagination -->
+          <div class="slds-p-top_medium pagination-container">
+            <button
+              class="slds-button slds-button_neutral"
+              onclick={handlePreviousContacts}
+              disabled={isContactFirstPage}
+            >
+              Previous
+            </button>
+            <span class="slds-p-horizontal_medium">
+              Page {currentContactPage} of {totalContactPages}
+            </span>
+            <button
+              class="slds-button slds-button_neutral"
+              onclick={handleNextContacts}
+              disabled={isContactLastPage}
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      </template>
+
+      <!-- Loading Spinner -->
+      <template if:true={isLoading}>
+        <lightning-spinner
+          alternative-text="Loading"
+          size="large"
+        ></lightning-spinner>
+      </template>
+
+      <!-- Error Message -->
+      <template if:true={errorMessage}>
+        <lightning-alert variant="error" onclose={handleCloseError}>
+          {errorMessage}
+        </lightning-alert>
+      </template>
+    </div>
+  </lightning-card>
+</template>
